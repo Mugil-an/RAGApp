@@ -9,7 +9,7 @@ class RAGUpsertResult(BaseModel):
     ingested: int
 
 class RAGSearchResult(BaseModel):
-    context: List[str]
+    contexts: List[str]
     sources: List[str]
 
 class RAGQueryResult(BaseModel):
