@@ -35,13 +35,13 @@ from dotenv import load_dotenv
 from vector_db import QdrantStorage
 
 load_dotenv()
-
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Google AI Studio configuration
-EMBED_MODEL = "models/text-embedding-004"  # Google's latest embedding model
-EMBED_DIM = 768  # Dimension for text-embedding-004
+EMBED_MODEL = "models/gemini-embedding-2-preview"
+EMBED_DIM = 3072
+
 
 # Initialize Google AI
 api_key = os.getenv("GOOGLE_API_KEY")
@@ -53,6 +53,8 @@ else:
 # Text splitter configuration
 splitter = SentenceSplitter(chunk_size=1000, chunk_overlap=200) if SentenceSplitter else None
 
+# for model in genai.list_models():
+#     print(model.name)
 
 def load_and_chunk_pdf(path: str) -> List[str]:
     """Load PDF and split into chunks using LlamaIndex.

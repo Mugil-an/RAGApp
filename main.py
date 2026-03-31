@@ -27,6 +27,7 @@ inngest_client = inngest.Inngest(
     serializer=inngest.PydanticSerializer(),
 )
 
+
 @inngest_client.create_function(
     fn_id="RAG : Inngest PDF",
     trigger=inngest.TriggerEvent(event="rag/inngest_pdf"),
@@ -45,7 +46,7 @@ async def rag_inngest_pdf(ctx:inngest.Context):
         ids = [str(uuid.uuid5(uuid.NAMESPACE_URL, f"{source_id}:{i}")) for i in range(len(chunks))]
         payloads = [{"source": source_id, "text": chunks[i]} for i in range(len(chunks))]
         # Use 768 dimensions for Google AI Studio embeddings
-        QdrantStorage(dim=768).upsert(ids, vecs, payloads)
+        QdrantStorage().upsert(ids, vecs, payloads)
         return RAGUpsertResult(ingested=len(chunks))
 
 
@@ -61,7 +62,7 @@ async def rag_query_pdf_ai(ctx: inngest.Context):
     # --- Step 1: Search for relevant context ---
     def _search(question: str, top_k: int = 5) -> RAGSearchResult:
         query_vec = embed_texts([question])[0]
-        store = QdrantStorage(dim=768)
+        store = QdrantStorage()
         found = store.search(query_vec, top_k)
         return RAGSearchResult(contexts=found["contexts"], sources=found["sources"])
 
@@ -78,7 +79,7 @@ async def rag_query_pdf_ai(ctx: inngest.Context):
             "Answer clearly and deeply using only the context above ."
         )
 
-        model = genai.GenerativeModel('gemini-2.0-flash-001')
+        model = genai.GenerativeModel('gemini-2.5-flash')
         response = model.generate_content(prompt)
         return response.text.strip()
 
