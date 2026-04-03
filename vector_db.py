@@ -1,5 +1,5 @@
 from qdrant_client import QdrantClient
-from qdrant_client.models import VectorParams, Distance, PointStruct
+from qdrant_client.models import VectorParams, Distance, PointStruct,Filter,FieldCondition,MatchValue
 import logging
 
 logger = logging.getLogger(__name__)
@@ -32,6 +32,15 @@ class QdrantStorage:
         except Exception as e:
             logger.error(f"Failed to upsert to Qdrant: {e}")
             raise RuntimeError(f"Qdrant upsert failed: {e}")
+    
+    def delete_by_source(self,source_id : str) -> None:
+        self.collection.delete(
+            collection_name = self.collection,
+            points_selector = Filter(
+                must= [FieldCondition(key = "source",match = MatchValue(value = source_id))]
+            )
+
+        )
 
     def search(self, query_vector, top_k: int = 5):
         try:
@@ -42,7 +51,7 @@ class QdrantStorage:
                 limit=top_k,
             )
             contexts = []
-            sources = set()
+            sources = list()
 
             for r in results:
                 payload = getattr(r, "payload", None) or {}
@@ -50,21 +59,10 @@ class QdrantStorage:
                 source = payload.get("source", "")
                 if text:
                     contexts.append(text)
-                    sources.add(source)
+                    sources.append(source)
             
             return {"contexts": contexts, "sources": list(sources)}
         except Exception as e:
             logger.error(f"Failed to search Qdrant: {e}")
             raise RuntimeError(f"Qdrant search failed: {e}")
     
-    def delete_collection(self):
-        """Delete the collection. Useful for dimension mismatches."""
-        try:
-            if self.client.collection_exists(self.collection):
-                self.client.delete_collection(self.collection)
-                logger.info(f"Deleted collection '{self.collection}'")
-            else:
-                logger.info(f"Collection '{self.collection}' does not exist")
-        except Exception as e:
-            logger.error(f"Failed to delete collection: {e}")
-            raise RuntimeError(f"Collection deletion failed: {e}")

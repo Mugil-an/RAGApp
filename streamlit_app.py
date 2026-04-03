@@ -40,6 +40,11 @@ async def send_rag_ingest_event(pdf_path: Path) -> None:
         )
     )
 
+async def send_rag_delete_event(source_id : str) -> None:
+    client = get_inngest_client()
+    await client.send(
+        inngest.Event(name = "rag/delete",data = {"source_id" : source_id}))
+
 async def send_rag_query_event(question: str, top_k: int) -> str:
     """Sends a query event to Inngest and returns the event ID."""
     client = get_inngest_client()
@@ -87,7 +92,19 @@ def wait_for_run_output(event_id: str, timeout_s: float = 120.0, poll_interval_s
         time.sleep(poll_interval_s)
     raise TimeoutError(f"Timed out waiting for run output. Last known status: {last_status}")
 
+def human_size(num_bytes: int) -> str:
+    for unit in ("B", "KB", "MB", "GB"):
+        if num_bytes < 1024:
+            return f"{num_bytes:.0f} {unit}" if unit == "B" else f"{num_bytes:.1f} {unit}"
+        num_bytes /= 1024
+    return f"{num_bytes:.1f} TB"
 
+
+def get_all_uploaded_files() -> list[os.DirEntry]:
+    uploads_dir = Path("uploads")
+    if not uploads_dir.exists():
+        return []
+    return [entry for entry in os.scandir(uploads_dir) if entry.is_file()]
 # --- Streamlit UI ---
 
 st.title("📄 RAG Application with Inngest")
@@ -113,6 +130,25 @@ with tab1:
         st.success(f"✅ Successfully triggered ingestion for: `{path.name}`")
         st.info("Switch to the 'Query Documents' tab to ask questions.")
 
+    st.header("Files Uploaded")
+    files = sorted(
+        get_all_uploaded_files(),
+        key=lambda entry: entry.stat().st_mtime,
+        reverse=True,
+    )
+    if not files:
+        st.info("No uploads yet.")
+    else:
+        for entry in files:
+            col1, col2 = st.columns([4, 1])
+            with col1:
+                st.write(f"{entry.name} ({human_size(entry.stat().st_size)})")
+            with col2:
+                if st.button("Delete", key=f"del-{entry.name}"):
+                    asyncio.run(send_rag_delete_event(entry.name))
+                    Path(entry.path).unlink(missing_ok=True)
+                    st.success(f"Deleted {entry.name}")
+                    st.rerun()
 # --- Query Tab ---
 with tab2:
     st.header("Ask a Question")

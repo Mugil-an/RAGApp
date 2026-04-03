@@ -54,11 +54,22 @@ async def rag_inngest_pdf(ctx:inngest.Context):
     ingested = await ctx.step.run("embed-and-upsert",lambda : _upsert(chunks_and_src),output_type=RAGUpsertResult)
     return ingested.model_dump()
 
+
+@inngest_client.create_function(
+        fn_id="RAG : Delete",
+        trigger = inngest.TriggerEvent(event = '/rag/delete'),
+)
+async def rag_delete(ctx : inngest.Context):
+    source_id = ctx.event.data["source_id"]
+    QdrantStorage().delete_by_source(source_id=source_id)
+    return {'deleted':True,"source_id":source_id}
+
+
 @inngest_client.create_function(
     fn_id="RAG : Query",
     trigger=inngest.TriggerEvent(event="rag/query"),
 )
-async def rag_query_pdf_ai(ctx: inngest.Context):
+async def rag_query_pdf_ai(ctx: inngest.Context) -> RAGQueryResult:
     # --- Step 1: Search for relevant context ---
     def _search(question: str, top_k: int = 5) -> RAGSearchResult:
         query_vec = embed_texts([question])[0]
@@ -98,4 +109,4 @@ async def rag_query_pdf_ai(ctx: inngest.Context):
 
 # --- FastAPI Server Setup ---
 app = FastAPI()
-inngest.fast_api.serve(app,inngest_client,functions=[rag_inngest_pdf, rag_query_pdf_ai])
+inngest.fast_api.serve(app,inngest_client,functions=[rag_inngest_pdf, rag_query_pdf_ai,rag_delete])

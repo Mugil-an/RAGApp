@@ -1,0 +1,77 @@
+[
+  {
+    "question": "What is the main objective of the research conducted by Darshan Lamichhane?",
+    "answer": "The objective is to investigate the application of Vision Transformers (ViTs) in the field of digital image forensics, specifically focusing on the model's ability to detect AI-generated images and comparing its performance with traditional CNN-based methods.",
+    "sources": ["Advanced_Detection_of_AI-Generated_Images_Through_Vision_Transformers.pdf"]
+  },
+  {
+    "question": "In the study by Lamichhane, what was the optimal patch size for the ViT model, and what was the resulting accuracy?",
+    "answer": "The 16 x 16 patch size offered the best performance with an accuracy of 98.2%. Larger patches (32 x 32) reduced accuracy to 95.8%, while smaller patches (8 x 8) reduced it to 97.5%.",
+    "sources": ["Advanced_Detection_of_AI-Generated_Images_Through_Vision_Transformers.pdf"]
+  },
+  {
+    "question": "How does the Vision Transformer (ViT) model treat images differently than traditional CNNs?",
+    "answer": "ViT marks a paradigm shift by treating images as sequences of patches, much like tokens in natural language processing, allowing the model to identify long-range dependencies and complex patterns.",
+    "sources": ["Advanced_Detection_of_AI-Generated_Images_Through_Vision_Transformers.pdf"]
+  },
+  {
+    "question": "According to the paper 'An Image is Worth 16x16 Words', how does ViT's inductive bias compare to CNNs?",
+    "answer": "Vision Transformers have much less image-specific inductive bias than CNNs. In CNNs, locality and translation equivariance are baked into each layer, whereas in ViT, spatial relations between patches must be learned from scratch (except for the initial patch extraction and resolution adjustment during fine-tuning).",
+    "sources": ["An_Image_is_Worth_16x16_Words.pdf"]
+  },
+  {
+    "question": "What is the significance of the '[class]' token in the ViT architecture?",
+    "answer": "The '[class]' token is a learnable embedding prepended to the sequence of embedded patches. Its state at the output of the Transformer encoder serves as the aggregate image representation used by the classification head.",
+    "sources": ["An_Image_is_Worth_16x16_Words.pdf"]
+  },
+  {
+    "question": "What happens to ViT's performance when trained on mid-sized datasets like ImageNet without strong regularization?",
+    "answer": "When trained on mid-sized datasets without strong regularization, ViT models yield modest accuracies, typically a few percentage points below ResNets of comparable size, because they lack the inductive biases inherent to CNNs.",
+    "sources": ["An_Image_is_Worth_16x16_Words.pdf"]
+  },
+  {
+    "question": "In the ablation study for AI-generated image detection, what was the impact of removing data augmentation?",
+    "answer": "The absence of data augmentation led to a noticeable decrease in performance, with accuracy dropping from 98.2% to 95.5% and the F1-score dropping from 98.2 to 95.4.",
+    "sources": ["Advanced_Detection_of_AI-Generated_Images_Through_Vision_Transformers.pdf"]
+  },
+  {
+    "question": "How does the number of attention heads affect the ViT model's performance in detecting fake images?",
+    "answer": "A configuration with 8 attention heads achieved the best performance (98.2% accuracy). Reducing the heads to 4 decreased accuracy to 95.8%, while increasing to 16 heads did not yield significant improvement (98.4%) but came at a higher computational cost.",
+    "sources": ["Advanced_Detection_of_AI-Generated_Images_Through_Vision_Transformers.pdf"]
+  },
+  {
+    "question": "What dataset was used in the research for 'Advanced Detection of AI-Generated Images' and what was its composition?",
+    "answer": "The study used a dataset sourced from Kaggle consisting of 30,000 images. It was a balanced set containing 15,000 real images and 15,000 AI-generated images created using GAN architectures.",
+    "sources": ["Advanced_Detection_of_AI-Generated_Images_Through_Vision_Transformers.pdf"]
+  },
+  {
+    "question": "According to Dosovitskiy et al., at what scale of pre-training does ViT begin to outperform state-of-the-art CNNs?",
+    "answer": "ViT approaches or beats state-of-the-art results when pre-trained on large-scale datasets such as the public ImageNet-21k (14 million images) or the in-house JFT-300M (303 million images).",
+    "sources": ["An_Image_is_Worth_16x16_Words.pdf"]
+  },
+  {
+    "question": "How does the ViT model handle images of higher resolution during the fine-tuning stage?",
+    "answer": "The patch size is kept the same, which results in a larger effective sequence length. To accommodate this, the model performs 2D interpolation of the pre-trained position embeddings based on their location in the original image.",
+    "sources": ["An_Image_is_Worth_16x16_Words.pdf"]
+  },
+  {
+    "question": "What limitation of traditional CNNs did the research on AI-generated image detection seek to address?",
+    "answer": "CNNs often struggle with identifying global context and long-range dependencies in images, which are crucial for identifying the subtle differences between real and AI-generated images as generative models become more sophisticated.",
+    "sources": ["Advanced_Detection_of_AI-Generated_Images_Through_Vision_Transformers.pdf"]
+  },
+  {
+    "question": "What were the five standard evaluation metrics used to assess the ViT model's performance in the Lamichhane study?",
+    "answer": "The five metrics were Precision, Recall, F1-score, Accuracy, and Area Under the Curve of the Receiver Operating Characteristic (ROC-AUC).",
+    "sources": ["Advanced_Detection_of_AI-Generated_Images_Through_Vision_Transformers.pdf"]
+  },
+  {
+    "question": "Which ViT variant has the highest number of parameters according to the ICLR 2021 paper?",
+    "answer": "The ViT-Huge model, which features 32 layers, a hidden size D of 1280, 16 attention heads, and a total of 632 million parameters.",
+    "sources": ["An_Image_is_Worth_16x16_Words.pdf"]
+  },
+  {
+    "question": "What is 'attention distance' in the context of Vision Transformers, and how does it change with network depth?",
+    "answer": "Attention distance is analogous to receptive field size in CNNs. In ViTs, some heads attend to most of the image even in the lowest layers, but generally, the average attention distance increases as the network gets deeper.",
+    "sources": ["An_Image_is_Worth_16x16_Words.pdf"]
+  }
+]
