@@ -24,7 +24,7 @@ except ImportError:
 
 from data_loader import load_and_chunk_pdf
 
-GEN_MODEL = "gemini-2.5-flash"
+GEN_MODEL = "gemma-4-26b-a4b-it"
 
 
 def load_pdf_text(path: str, max_chars: int = 12000) -> str:
@@ -50,6 +50,7 @@ def generate_qa(text: str, count: int, source_id: str) -> List[Dict[str, object]
         "All answers MUST be grounded in the provided document text.\n"
         "Return JSON ONLY: a list of objects with keys question, answer, sources.\n"
         f"Each sources value must be a list with the single source_id: {source_id}.\n\n"
+        f"Only give the JSON data described above,noting else.\n\n"
         f"Requested count: {count}\n\n"
         f"Document text:\n{text}\n"
     )

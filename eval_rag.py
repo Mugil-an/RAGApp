@@ -33,8 +33,8 @@ from data_loader import embed_texts
 from vector_db import QdrantStorage
 
 DEFAULT_TOP_K = 5
-GEN_MODEL = "gemini-2.5-flash"
-JUDGE_MODEL = "gemini-2.5-flash"
+GEN_MODEL = "gemini-3-flash-preview"
+JUDGE_MODEL = "gemini-3-flash-preview"
 
 
 def normalize_text(text: str) -> str:
@@ -94,7 +94,6 @@ def generate_answer(question: str, contexts: List[str]) -> str:
   if not api_key:
     raise RuntimeError("GOOGLE_API_KEY is required to generate answers")
   genai.configure(api_key=api_key)
-
   context_block = "\n\n".join(f"- {c}" for c in contexts)
   prompt = (
     "Use the following context to answer the question. If the answer is not in the context, say so.\n\n"
@@ -260,7 +259,7 @@ def main() -> None:
   parser.add_argument("--judge-delay-s", type=float, default=0.0, help="Delay after each judge call (seconds)")
   parser.add_argument("--embed-delay-s", type=float, default=0.0, help="Delay after each embed call (seconds)")
   parser.add_argument("--output", default=None, help="Output file to save incremental results")
-  parser.add_argument("--resume", action="store_true", help="Resume from checkpoint (requires --output)")
+  parser.add_argument("--resume",action="store_true", help="Resume from checkpoint (requires --output)")
   args = parser.parse_args()
 
   with open(args.data, "r", encoding="utf-8") as f:

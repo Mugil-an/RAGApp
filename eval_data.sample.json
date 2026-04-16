@@ -1,77 +1,127 @@
 [
   {
-    "question": "What is the main objective of the research conducted by Darshan Lamichhane?",
-    "answer": "The objective is to investigate the application of Vision Transformers (ViTs) in the field of digital image forensics, specifically focusing on the model's ability to detect AI-generated images and comparing its performance with traditional CNN-based methods.",
-    "sources": ["Advanced_Detection_of_AI-Generated_Images_Through_Vision_Transformers.pdf"]
+    "question": "What is the main objective demonstrated by the Vision Transformer (ViT) research?",
+    "answer": "The research shows that a pure transformer applied directly to sequences of image patches can perform very well on image classification tasks, proving that reliance on CNNs is not necessary.",
+    "sources": ["2010.11929v2.pdf"]
   },
   {
-    "question": "In the study by Lamichhane, what was the optimal patch size for the ViT model, and what was the resulting accuracy?",
-    "answer": "The 16 x 16 patch size offered the best performance with an accuracy of 98.2%. Larger patches (32 x 32) reduced accuracy to 95.8%, while smaller patches (8 x 8) reduced it to 97.5%.",
-    "sources": ["Advanced_Detection_of_AI-Generated_Images_Through_Vision_Transformers.pdf"]
+    "question": "How does the Vision Transformer (ViT) handle 2D images as input to the Transformer?",
+    "answer": "The model reshapes the image into a sequence of flattened 2D patches, treating the image patches the same way as tokens (words) in an NLP application.",
+    "sources": ["2010.11929v2.pdf"]
   },
   {
-    "question": "How does the Vision Transformer (ViT) model treat images differently than traditional CNNs?",
-    "answer": "ViT marks a paradigm shift by treating images as sequences of patches, much like tokens in natural language processing, allowing the model to identify long-range dependencies and complex patterns.",
-    "sources": ["Advanced_Detection_of_AI-Generated_Images_Through_Vision_Transformers.pdf"]
+    "question": "What are the two specific inductive biases inherent to CNNs that the Vision Transformer lacks?",
+    "answer": "The Vision Transformer lacks translation equivariance and locality, which are inductive biases inherent to CNNs.",
+    "sources": ["2010.11929v2.pdf"]
   },
   {
-    "question": "According to the paper 'An Image is Worth 16x16 Words', how does ViT's inductive bias compare to CNNs?",
-    "answer": "Vision Transformers have much less image-specific inductive bias than CNNs. In CNNs, locality and translation equivariance are baked into each layer, whereas in ViT, spatial relations between patches must be learned from scratch (except for the initial patch extraction and resolution adjustment during fine-tuning).",
-    "sources": ["An_Image_is_Worth_16x16_Words.pdf"]
+    "question": "What is the effect of training ViT on mid-sized datasets like ImageNet without strong regularization?",
+    "answer": "When trained on mid-sized datasets without strong regularization, these models yield modest accuracies that are a few percentage points below ResNets of comparable size.",
+    "sources": ["2010.11929v2.pdf"]
   },
   {
-    "question": "What is the significance of the '[class]' token in the ViT architecture?",
-    "answer": "The '[class]' token is a learnable embedding prepended to the sequence of embedded patches. Its state at the output of the Transformer encoder serves as the aggregate image representation used by the classification head.",
-    "sources": ["An_Image_is_Worth_16x16_Words.pdf"]
+    "question": "What did the researchers find regarding the relationship between large-scale training and inductive bias?",
+    "answer": "The researchers found that large scale training trumps inductive bias.",
+    "sources": ["2010.11929v2.pdf"]
   },
   {
-    "question": "What happens to ViT's performance when trained on mid-sized datasets like ImageNet without strong regularization?",
-    "answer": "When trained on mid-sized datasets without strong regularization, ViT models yield modest accuracies, typically a few percentage points below ResNets of comparable size, because they lack the inductive biases inherent to CNNs.",
-    "sources": ["An_Image_is_Worth_16x16_Words.pdf"]
+    "question": "Which two large datasets were used for pre-training the Vision Transformer?",
+    "answer": "The models were pre-trained on the public ImageNet-21k dataset or the in-house JFT-300M dataset.",
+    "sources": ["2010.11929v2.pdf"]
   },
   {
-    "question": "In the ablation study for AI-generated image detection, what was the impact of removing data augmentation?",
-    "answer": "The absence of data augmentation led to a noticeable decrease in performance, with accuracy dropping from 98.2% to 95.5% and the F1-score dropping from 98.2 to 95.4.",
-    "sources": ["Advanced_Detection_of_AI-Generated_Images_Through_Vision_Transformers.pdf"]
+    "question": "What is the accuracy achieved by the best ViT model on the ImageNet benchmark?",
+    "answer": "The best model reaches an accuracy of 88.55% on ImageNet.",
+    "sources": ["2010.11929v2.pdf"]
   },
   {
-    "question": "How does the number of attention heads affect the ViT model's performance in detecting fake images?",
-    "answer": "A configuration with 8 attention heads achieved the best performance (98.2% accuracy). Reducing the heads to 4 decreased accuracy to 95.8%, while increasing to 16 heads did not yield significant improvement (98.4%) but came at a higher computational cost.",
-    "sources": ["Advanced_Detection_of_AI-Generated_Images_Through_Vision_Transformers.pdf"]
+    "question": "What accuracy does the ViT model achieve on the CIFAR-100 dataset?",
+    "answer": "The model reaches an accuracy of 94.55% on CIFAR-100.",
+    "sources": ["2010.11929v2.pdf"]
   },
   {
-    "question": "What dataset was used in the research for 'Advanced Detection of AI-Generated Images' and what was its composition?",
-    "answer": "The study used a dataset sourced from Kaggle consisting of 30,000 images. It was a balanced set containing 15,000 real images and 15,000 AI-generated images created using GAN architectures.",
-    "sources": ["Advanced_Detection_of_AI-Generated_Images_Through_Vision_Transformers.pdf"]
+    "question": "What is the accuracy of the ViT model on the VTAB suite of 19 tasks?",
+    "answer": "The model reaches an accuracy of 77.63% on the VTAB suite of 19 tasks.",
+    "sources": ["2010.11929v2.pdf"]
   },
   {
-    "question": "According to Dosovitskiy et al., at what scale of pre-training does ViT begin to outperform state-of-the-art CNNs?",
-    "answer": "ViT approaches or beats state-of-the-art results when pre-trained on large-scale datasets such as the public ImageNet-21k (14 million images) or the in-house JFT-300M (303 million images).",
-    "sources": ["An_Image_is_Worth_16x16_Words.pdf"]
+    "question": "How is the [class] token used in the Vision Transformer?",
+    "answer": "A learnable embedding is prepended to the sequence of embedded patches, and its state at the output of the Transformer encoder serves as the image representation.",
+    "sources": ["2010.11929v2.pdf"]
   },
   {
-    "question": "How does the ViT model handle images of higher resolution during the fine-tuning stage?",
-    "answer": "The patch size is kept the same, which results in a larger effective sequence length. To accommodate this, the model performs 2D interpolation of the pre-trained position embeddings based on their location in the original image.",
-    "sources": ["An_Image_is_Worth_16x16_Words.pdf"]
+    "question": "How is the classification head implemented during the pre-training phase?",
+    "answer": "During pre-training, the classification head is implemented by an MLP with one hidden layer.",
+    "sources": ["2010.11929v2.pdf"]
   },
   {
-    "question": "What limitation of traditional CNNs did the research on AI-generated image detection seek to address?",
-    "answer": "CNNs often struggle with identifying global context and long-range dependencies in images, which are crucial for identifying the subtle differences between real and AI-generated images as generative models become more sophisticated.",
-    "sources": ["Advanced_Detection_of_AI-Generated_Images_Through_Vision_Transformers.pdf"]
+    "question": "How is the classification head implemented during the fine-tuning phase?",
+    "answer": "During fine-tuning, the classification head is implemented by a single linear layer.",
+    "sources": ["2010.11929v2.pdf"]
   },
   {
-    "question": "What were the five standard evaluation metrics used to assess the ViT model's performance in the Lamichhane study?",
-    "answer": "The five metrics were Precision, Recall, F1-score, Accuracy, and Area Under the Curve of the Receiver Operating Characteristic (ROC-AUC).",
-    "sources": ["Advanced_Detection_of_AI-Generated_Images_Through_Vision_Transformers.pdf"]
+    "question": "How does the model retain positional information in the sequence of embeddings?",
+    "answer": "Position embeddings are added to the patch embeddings to retain positional information; the researchers use standard learnable 1D position embeddings.",
+    "sources": ["2010.11929v2.pdf"]
   },
   {
-    "question": "Which ViT variant has the highest number of parameters according to the ICLR 2021 paper?",
-    "answer": "The ViT-Huge model, which features 32 layers, a hidden size D of 1280, 16 attention heads, and a total of 632 million parameters.",
-    "sources": ["An_Image_is_Worth_16x16_Words.pdf"]
+    "question": "What are the two main components that alternate in the Transformer encoder?",
+    "answer": "The Transformer encoder consists of alternating layers of multi-headed self-attention (MSA) and MLP blocks.",
+    "sources": ["2010.11929v2.pdf"]
   },
   {
-    "question": "What is 'attention distance' in the context of Vision Transformers, and how does it change with network depth?",
-    "answer": "Attention distance is analogous to receptive field size in CNNs. In ViTs, some heads attend to most of the image even in the lowest layers, but generally, the average attention distance increases as the network gets deeper.",
-    "sources": ["An_Image_is_Worth_16x16_Words.pdf"]
+    "question": "What is the role of LayerNorm and residual connections in the Transformer encoder architecture?",
+    "answer": "Layernorm (LN) is applied before every block, and residual connections are applied after every block.",
+    "sources": ["2010.11929v2.pdf"]
+  },
+  {
+    "question": "What type of non-linearity is used in the MLP blocks of the Transformer?",
+    "answer": "The MLP contains two layers with a GELU non-linearity.",
+    "sources": ["2010.11929v2.pdf"]
+  },
+  {
+    "question": "What is the mathematical formula for the number of patches N?",
+    "answer": "The number of patches is N = HW/P^2, where H and W are the resolution of the original image and P is the resolution of each image patch.",
+    "sources": ["2010.11929v2.pdf"]
+  },
+  {
+    "question": "Why is a naive application of self-attention to pixels not scalable for images?",
+    "answer": "A naive application would require each pixel to attend to every other pixel, resulting in a quadratic cost in the number of pixels, which does not scale to realistic input sizes.",
+    "sources": ["2010.11929v2.pdf"]
+  },
+  {
+    "question": "How does the model of Cordonnier et al. (2020) differ from the Vision Transformer regarding patch size?",
+    "answer": "Cordonnier et al. (2020) use a small patch size of 2x2 pixels, which makes their model applicable only to small-resolution images, whereas ViT handles medium-resolution images as well.",
+    "sources": ["2010.11929v2.pdf"]
+  },
+  {
+    "question": "What was the maximal accuracy achieved by the image GPT (iGPT) model on ImageNet?",
+    "answer": "The iGPT model achieved a maximal accuracy of 72% on ImageNet.",
+    "sources": ["2010.11929v2.pdf"]
+  },
+  {
+    "question": "What is the advantage of following the original Transformer design closely in the ViT model?",
+    "answer": "The advantage is that scalable NLP Transformer architectures and their efficient implementations can be used almost out of the box.",
+    "sources": ["2010.11929v2.pdf"]
+  },
+  {
+    "question": "In the context of the Transformer input, what is the purpose of the trainable linear projection?",
+    "answer": "The trainable linear projection is used to flatten the patches and map them to the constant latent vector size D.",
+    "sources": ["2010.11929v2.pdf"]
+  },
+  {
+    "question": "What is the specific accuracy achieved by ViT on the ImageNet-ReaL benchmark?",
+    "answer": "The best ViT model reaches an accuracy of 90.72% on ImageNet-ReaL.",
+    "sources": ["2010.11929v2.pdf"]
+  },
+  {
+    "question": "What type of position embeddings did the researchers use and why?",
+    "answer": "They used standard learnable 1D position embeddings because they did not observe significant performance gains from using more advanced 2D-aware position embeddings.",
+    "sources": ["2010.11929v2.pdf"]
+  },
+  {
+    "question": "How is the input sequence length for the Transformer determined in the ViT model?",
+    "answer": "The effective input sequence length for the Transformer is N, which is the resulting number of patches calculated as N = HW/P^2.",
+    "sources": ["2010.11929v2.pdf"]
   }
 ]
